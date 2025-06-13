@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>IRON DOME – Crypto Defense System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h2 {
+      margin-bottom: 10px;
+      color: #222;
+    }
+    table {
+      background: white;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td, th {
+      padding: 8px;
+      text-align: center;
+    }
+    .explosao { background-color: #d1f0ff; }
+    .topo { background-color: #ffe2d1; }
+    .ideal { background-color: #d1ffd9; }
+    #rodape {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+    }
+    #rodape a {
+      color: #0b5ed7;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🛡️ IRON DOME – Crypto Defense System</h2>
+  <p><strong>Interceptando tokens em início de explosão.</strong></p>
+
+  <input type="email" id="email" placeholder="Seu e-mail autorizado" style="padding: 8px; width: 300px;" />
+  <button onclick="carregarDados()">🔍 Ver oportunidades</button>
+
+  <div id="painel" style="margin-top: 20px; display:none;">
+    <table id="tabela" class="display"></table>
+  </div>
+
+  <div id="rodape">
+    📞 Fale direto no WhatsApp: <a href="https://wa.me/5521982252303" target="_blank">552198225-2303</a><br>
+    Desenvolvido por Matrix Reversal Scanner
+  </div>
+
+  <script>
+    function carregarDados() {
+      const email = document.getElementById("email").value.trim();
+      if (!email) return alert("Insira seu e-mail autorizado");
+
+      fetch(`https://script.google.com/macros/s/SEU_ID_DO_GET/exec?email=${email}`)
+        .then(res => res.json())
+        .then(json => {
+          if (!json.autorizado) return alert("Acesso não autorizado.");
+          montarTabela(json.dados);
+        })
+        .catch(() => alert("Erro ao conectar à API."));
+    }
+
+    function montarTabela(dados) {
+      $("#painel").show();
+      const colunas = Object.keys(dados[0]).map(chave => ({ title: chave, data: chave }));
+
+      $('#tabela').DataTable({
+        data: dados,
+        columns: colunas,
+        destroy: true,
+        pageLength: 20,
+        createdRow: function(row, data) {
+          if (data["Fase Atual"].includes("🚀")) {
+            $(row).addClass("explosao");
+          } else if (data["Fase Atual"].includes("🟠")) {
+            $(row).addClass("topo");
+          } else {
+            $(row).addClass("ideal");
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+  </html>
