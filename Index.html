@@ -64,7 +64,7 @@
       const email = document.getElementById("email").value.trim();
       if (!email) return alert("Insira seu e-mail autorizado");
 
-      fetch(`https://script.google.com/macros/s/SEU_ID_DO_GET/exec?email=${email}`)
+      fetch(https://script.google.com/macros/s/AKfycbzQ5Qfq4fFc3WqOWCuZAM4ZQmYlPEa0bgk1D7B45s4KAAoPosYm41bl4Sj1W5Fw97sK/exec?email=${email}`)
         .then(res => res.json())
         .then(json => {
           if (!json.autorizado) return alert("Acesso não autorizado.");
