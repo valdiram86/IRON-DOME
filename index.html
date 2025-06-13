@@ -83,9 +83,9 @@
         destroy: true,
         pageLength: 20,
         createdRow: function(row, data) {
-          if (data["Fase Atual"].includes("🚀")) {
+          if (data["Fase Atual"] && data["Fase Atual"].includes("🚀")) {
             $(row).addClass("explosao");
-          } else if (data["Fase Atual"].includes("🟠")) {
+          } else if (data["Fase Atual"] && data["Fase Atual"].includes("🟠")) {
             $(row).addClass("topo");
           } else {
             $(row).addClass("ideal");
