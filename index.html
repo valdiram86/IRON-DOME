@@ -29,6 +29,12 @@
     .explosao { background-color: #d1f0ff; }
     .topo { background-color: #ffe2d1; }
     .ideal { background-color: #d1ffd9; }
+
+    .rsi-vermelho { background-color: #ffcccc !important; }
+    .rsi-amarelo { background-color: #fff7b2 !important; }
+    .rsi-verde { background-color: #c9f7c5 !important; }
+    .rsi-azul { background-color: #cce0ff !important; }
+
     #rodape {
       margin-top: 30px;
       font-size: 14px;
@@ -75,14 +81,41 @@
 
     function montarTabela(dados) {
       $("#painel").show();
-      const colunas = Object.keys(dados[0]).map(chave => ({ title: chave, data: chave }));
+
+      const colunas = Object.keys(dados[0]).map(chave => {
+        if (chave.toLowerCase().includes("link")) {
+          return {
+            title: chave,
+            data: chave,
+            render: function (data) {
+              return `<a href="${data}" target="_blank">🔗 Abrir</a>`;
+            }
+          };
+        } else {
+          return { title: chave, data: chave };
+        }
+      });
+
+      const idxRSI = Object.keys(dados[0]).findIndex(c => c.toUpperCase().includes("RSI"));
 
       $('#tabela').DataTable({
         data: dados,
         columns: colunas,
         destroy: true,
-        pageLength: 20,
+        paging: false,  // sem paginação
         createdRow: function(row, data) {
+          // Coloração RSI
+          if (idxRSI >= 0) {
+            const rsi = parseFloat(data[Object.keys(data)[idxRSI]]);
+            const celulaRSI = $('td', row).eq(idxRSI);
+
+            if (rsi < 40) celulaRSI.addClass('rsi-vermelho');
+            else if (rsi < 60) celulaRSI.addClass('rsi-amarelo');
+            else if (rsi <= 70) celulaRSI.addClass('rsi-verde');
+            else celulaRSI.addClass('rsi-azul');
+          }
+
+          // Destaque por Fase Atual
           if (data["Fase Atual"] && data["Fase Atual"].includes("🚀")) {
             $(row).addClass("explosao");
           } else if (data["Fase Atual"] && data["Fase Atual"].includes("🟠")) {
