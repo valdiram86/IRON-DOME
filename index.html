@@ -70,7 +70,7 @@
       const email = document.getElementById("email").value.trim();
       if (!email) return alert("Insira seu e-mail autorizado");
 
-      fetch(`https://script.google.com/macros/s/AKfycbzQ5Qfq4fFc3WqOWCuZAM4ZQmYlPEa0bgk1D7B45s4KAAoPosYm41bl4Sj1W5Fw97sK/exec?email=${email}`)
+      fetch(`https://script.google.com/macros/s/AKfycbwKubkgfc3rDThFR3Y_ZVMSGtbSUJ48itr4-AZd-KOIup11_fpp-l24htbYTn00evj-/exec?email=${email}`)
         .then(res => res.json())
         .then(json => {
           if (!json.autorizado) return alert("Acesso não autorizado.");
